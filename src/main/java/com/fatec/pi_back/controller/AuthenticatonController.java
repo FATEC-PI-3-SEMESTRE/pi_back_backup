@@ -36,17 +36,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
         @PostMapping("/login")
         public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginDTO data) {
-            var userPassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
-            System.out.println("=================================================================");
-            System.out.println(userPassword);
-            System.out.println("=================================================================");
-            
+            var userPassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());            
             var auth = this.authenticationManager.authenticate(userPassword);
-            System.out.println("=================================================================");
-            System.out.println(auth);
-            System.out.println("=================================================================");
             var token = tokenService.generateToken((User) auth.getPrincipal());
-                
             return ResponseEntity.ok(new LoginResponseDTO(token));
 
         }
@@ -54,8 +46,8 @@ import org.springframework.web.bind.annotation.RequestBody;
         @PostMapping("/register")
         public ResponseEntity<String> register(@RequestBody @Valid UserDTO data) {
             if(this.repository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
-            String encriptedPassword = new BCryptPasswordEncoder().encode(data.password());
-            User newUser = new User(data.email(), encriptedPassword, data.access());
+            String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
+            User newUser = new User(data.email(), encryptedPassword, data.access());
 
             this.repository.save(newUser);
             return ResponseEntity.ok().build();

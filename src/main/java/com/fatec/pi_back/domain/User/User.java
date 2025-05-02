@@ -1,9 +1,14 @@
 package com.fatec.pi_back.domain.User;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +28,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User implements UserDetails{
     @Id
     @GeneratedValue
     private Integer id;
@@ -31,6 +36,12 @@ public class User {
     private String password;
     private Boolean access;
     
+    public User(String email, String password, Boolean access){
+        this.email = email;
+        this.password = password;
+        this.access = access;
+    }
+
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;
@@ -48,4 +59,35 @@ public class User {
 
     @Column(nullable = false)
     private boolean deleted = false;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        String role = this.access ? "ROLE_ADMIN" : "ROLE_USER";
+        return List.of(new SimpleGrantedAuthority(role));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return !this.deleted;
+    }
 }

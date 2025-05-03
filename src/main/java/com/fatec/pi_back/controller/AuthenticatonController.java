@@ -12,8 +12,6 @@ import com.fatec.pi_back.service.TokenService;
 
 import jakarta.validation.Valid;
 
-import javax.naming.AuthenticationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestBody;
         public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginDTO data) {
             var userPassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());            
             var auth = this.authenticationManager.authenticate(userPassword);
+            System.out.println(auth);
             var token = tokenService.generateToken((User) auth.getPrincipal());
             return ResponseEntity.ok(new LoginResponseDTO(token));
 

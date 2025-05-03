@@ -1,8 +1,6 @@
-CREATE TABLE [User] (
+CREATE TABLE [TimerIntervals] (
     id INT AUTOINCREMENT PRIMARY KEY,
-    email NVARCHAR(255) NOT NULL,
-    password NVARCHAR(255) NOT NULL,
-    access BIT NOT NULL DEFAULT 0,
+    interval FLOAT,
 
     created_at DATETIME2 DEFAULT GETDATE() NOT NULL,
     updated_at DATETIME2 DEFAULT GETDATE() NOT NULL,

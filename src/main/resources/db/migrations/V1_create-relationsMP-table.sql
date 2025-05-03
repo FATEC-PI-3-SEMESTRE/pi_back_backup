@@ -1,8 +1,8 @@
-CREATE TABLE [User] (
+CREATE TABLE [RelationsMP] (
     id INT AUTOINCREMENT PRIMARY KEY,
-    email NVARCHAR(255) NOT NULL,
-    password NVARCHAR(255) NOT NULL,
-    access BIT NOT NULL DEFAULT 0,
+    dosage INT NOT NULL,
+    FK_Medication INT NOT NULL,
+    FK_Patient INT NOT NULL,
 
     created_at DATETIME2 DEFAULT GETDATE() NOT NULL,
     updated_at DATETIME2 DEFAULT GETDATE() NOT NULL,
@@ -12,4 +12,6 @@ CREATE TABLE [User] (
 
     CONSTRAINT FK_User_CreatedBy FOREIGN KEY (created_by) REFERENCES [User](id),
     CONSTRAINT FK_User_UpdatedBy FOREIGN KEY (updated_by) REFERENCES [User](id)
+    CONSTRAINT FK_RelationsMP_Medication FOREIGN KEY (FK_Medication) REFERENCES [Medication](id),
+    CONSTRAINT FK_RelationsMP_Patient FOREIGN KEY (FK_Patient) REFERENCES [Patient](id)
 );

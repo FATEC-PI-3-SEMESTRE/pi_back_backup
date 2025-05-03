@@ -13,3 +13,4 @@ CREATE TABLE [User] (
     CONSTRAINT FK_User_CreatedBy FOREIGN KEY (created_by) REFERENCES [User](id),
     CONSTRAINT FK_User_UpdatedBy FOREIGN KEY (updated_by) REFERENCES [User](id)
 );
+

@@ -14,6 +14,7 @@ CREATE TABLE [User] (
     CONSTRAINT FK_User_UpdatedBy FOREIGN KEY (updated_by) REFERENCES [User](id)
 );
 
+<<<<<<< HEAD
 CREATE TABLE [TimerIntervals] (
     id INT AUTOINCREMENT PRIMARY KEY,
     interval FLOAT,
@@ -46,3 +47,5 @@ CREATE TABLE [RelationsMP] (
     CONSTRAINT FK_RelationsMP_Patient FOREIGN KEY (FK_Patient) REFERENCES [Patient](id)
 );
 
+=======
+>>>>>>> e460fa778c0d9f06e1571f2471435cf9d1457fd7

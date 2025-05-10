@@ -7,16 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fatec.pi_back.domain.Medication.Medication;
+import com.fatec.pi_back.domain.Medication.MedicationDTO;
 import com.fatec.pi_back.repository.MedicationRepository;
 
 /**
  * Service layer for managing Medication entities.
- * <p>
  * This class contains business logic related to the Medication entity
  * and acts as a bridge between the controller and the repository.
- * </p>
  * 
- * @author 
+ * @author Pedro SIlva Faria dos Santos 
  */
 @Service
 public class MedicationService {
@@ -47,28 +46,34 @@ public class MedicationService {
     }
 
     /**
-     * Saves a new Medication to the database.
+     * Saves a new Medication to the database using data from a DTO.
      * 
-     * @param medication the Medication object to be saved
+     * @param dto the DTO containing the Medication data
      * @return the saved Medication entity
      */
-    public Medication createMedication(Medication medication) {
+    public Medication createMedication(MedicationDTO dto) {
+        Medication medication = new Medication(
+            dto.name(),
+            dto.function(),
+            dto.dosageWeight()
+        );
+        medication.setUpdatedBy(dto.updatedBy());
         return repository.save(medication);
     }
 
     /**
-     * Updates an existing Medication with new data.
+     * Updates an existing Medication using data from a DTO.
      * 
      * @param id the ID of the Medication to update
-     * @param updatedData the new Medication data
+     * @param dto the DTO containing the new data
      * @return an Optional containing the updated Medication, if found and modified
      */
-    public Optional<Medication> updateMedication(Long id, Medication updatedData) {
+    public Optional<Medication> updateMedication(Long id, MedicationDTO dto) {
         return repository.findById(id).map(existing -> {
-            existing.setName(updatedData.getName());
-            existing.setFunction(updatedData.getFunction());
-            existing.setDosageWeight(updatedData.getDosageWeight());
-            existing.setUpdatedBy(updatedData.getUpdatedBy());
+            existing.setName(dto.name());
+            existing.setFunction(dto.function());
+            existing.setDosageWeight(dto.dosageWeight());
+            existing.setUpdatedBy(dto.updatedBy());
             return repository.save(existing);
         });
     }
@@ -87,3 +92,4 @@ public class MedicationService {
         }).orElse(false);
     }
 }
+

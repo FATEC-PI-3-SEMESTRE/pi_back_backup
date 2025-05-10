@@ -8,17 +8,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.fatec.pi_back.domain.Medication.Medication;
+import com.fatec.pi_back.domain.Medication.MedicationDTO;
 import com.fatec.pi_back.service.MedicationService;
 
 /**
  * REST controller for managing Medication entities.
- * <p>
  * Provides endpoints to perform CRUD operations and soft delete on medications.
- * </p>
  * 
  * Base URL: {@code /medication}
  * 
- * @author 
+ * @author Pedro Silva Faria dos Santos
  */
 @RestController
 @RequestMapping("/medication")
@@ -54,27 +53,27 @@ public class MedicationController {
     }
 
     /**
-     * Creates a new medication.
+     * Creates a new medication using a DTO.
      *
-     * @param medication the Medication object to be created
+     * @param dto the MedicationDTO object with creation data
      * @return a ResponseEntity containing the created Medication
      */
     @PostMapping
-    public ResponseEntity<Medication> create(@RequestBody Medication medication) {
-        Medication saved = service.createMedication(medication);
+    public ResponseEntity<Medication> create(@RequestBody MedicationDTO dto) {
+        Medication saved = service.createMedication(dto);
         return ResponseEntity.ok(saved);
     }
 
     /**
-     * Updates an existing medication by ID.
+     * Updates an existing medication by ID using a DTO.
      *
      * @param id the ID of the medication to update
-     * @param body the updated Medication data
+     * @param dto the updated Medication data
      * @return a ResponseEntity with the updated Medication or 404 if not found
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Medication> update(@PathVariable Long id, @RequestBody Medication body) {
-        Optional<Medication> updated = service.updateMedication(id, body);
+    public ResponseEntity<Medication> update(@PathVariable Long id, @RequestBody MedicationDTO dto) {
+        Optional<Medication> updated = service.updateMedication(id, dto);
         return updated.map(ResponseEntity::ok)
                       .orElse(ResponseEntity.notFound().build());
     }

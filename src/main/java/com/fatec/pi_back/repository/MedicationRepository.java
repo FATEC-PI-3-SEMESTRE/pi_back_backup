@@ -5,12 +5,10 @@ import com.fatec.pi_back.domain.Medication.Medication;
 
 /**
  * Repository interface for Medication entity.
- * <p>
  * Provides basic CRUD operations and allows for custom query definitions
  * using Spring Data JPA.
- * </p>
  * 
- * @author 
+ * @author Pedro Silva Faria dos Santos
  * @see org.springframework.data.jpa.repository.JpaRepository
  */
 public interface MedicationRepository extends JpaRepository<Medication, Long> {

@@ -13,7 +13,7 @@ import lombok.*;
  * 
  * This entity is mapped to the "medication" table in the database.
  * 
- * @author 
+ * @author Pedro Silva Faria dos Santos
  */
 @Entity
 @Table(name = "medication")
